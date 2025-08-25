@@ -2,4 +2,5 @@
 
 Internal use only.  
 Contains test content.  
-Not useful for public usage.  
+Not useful for anyone else.  
+No relevance for public use.
