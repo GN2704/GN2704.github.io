@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <base target="_blank">
+    <title>Moji Linkovi</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 40px;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        h1 {
+            color: #FFFFFF;
+        }
+        dl {
+            padding: 0;
+        }
+        dt {
+            margin: 10px 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+        a {
+            text-decoration: none;
+            color: #FFFFFF;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        input[type="checkbox"] {
+            accent-color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Moja Lista Linkova</h1>
+
+    <dl>
+        <dt><a href="https://mail.proton.me/u/0/inbox">Proton Mail.me</a></dt>
+        <dt><a href="https://www.radio.garden/visit/kragujevac/mPnRX2G9">Radio Garden</a></dt>
+        <dt><a href="https://bitwarden.com/">Bitwarden PassManager</a></dt>
+        <dt><a href="ADRESA_SAJTA">IME_KOJE_CE_SE_PRIKAZATI</a></dt>
+    </dl>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const linkItems = document.querySelectorAll('dl dt');
+
+            linkItems.forEach((item, index) => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+
+                // **1. Čitanje sačuvane vrednosti iz LocalStorage-a**
+                const isChecked = localStorage.getItem('checkbox_' + index) === 'true';
+                checkbox.checked = isChecked;
+
+                // **2. Dodavanje događaja za čuvanje stanja**
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        localStorage.setItem('checkbox_' + index, 'true');
+                    } else {
+                        localStorage.removeItem('checkbox_' + index);
+                    }
+                });
+                
+                item.prepend(checkbox);
+            });
+        });
+    </script>
+
+</body>
+</html>
