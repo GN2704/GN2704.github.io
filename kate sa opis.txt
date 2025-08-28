@@ -1,0 +1,233 @@
+## 1 PERSONAL & ADMIN
+
+**1.1 ⭐ Favorites** - Frequently used resources  
+
+**1.2 📁 Files & Storage Management** - Organize and store files  
+- 1.2.1 Local Files - main folder - Personal local files  
+  - 1.2.1.1 Documents - Text and document files  
+  - 1.2.1.2 AirDrop (ALL OS & Users) - Cross-device file sharing  
+- 1.2.2 File Hosting & Sharing - Online file storage and sharing  
+  - 1.2.2.1 Cloud Storage - Cloud-based storage solutions  
+  - 1.2.2.2 File Transfer Services - Services for sending files
+
+**1.3 📄 Personal Administration** - Manage personal documents  
+- 1.3.1 German VISA Documents - Visa related papers  
+- 1.3.2 Shopping Lists - Personal shopping notes  
+- 1.3.3 Bills Management - Track and organize bills  
+  - 1.3.3.1 Serbia - Bills for Serbia  
+  - 1.3.3.2 Germany - Bills for Germany
+
+## 2 BUSINESS & FINANCE
+
+**2.1 🏦 Banking & Business Operations** - Financial operations and tools  
+- 2.1.1 Banking Services - Bank accounts and services  
+- 2.1.2 Business Tools & Operations - Tools for running a business  
+- 2.1.3 Trading - Stocks and financial trading
+
+**2.2 💰 Finance & Payments** - Payments and analytics  
+- 2.2.1 Payment Systems & Donations - Payment processing  
+- 2.2.2 Analytics & Business Intelligence - Data analysis tools  
+- 2.2.3 CRM & Customer Management - Customer relationship tools
+
+**2.3 🛒 E-commerce & Sales** - Selling products and services  
+- 2.3.1 Online Marketplaces - Platforms for selling  
+  - 2.3.1.1 Amazon - Amazon marketplace  
+  - 2.3.1.2 Dropshipping - Dropshipping business  
+  - 2.3.1.3 AirBNB - Short-term rental platform  
+  - 2.3.1.4 Microgreens Business - Specialty business  
+- 2.3.2 Digital Products Sales - Selling digital goods  
+- 2.3.3 Sales Automation - Automate sales processes  
+- 2.3.4 Logistics Management - Manage shipping and delivery
+
+**2.4 📢 Marketing & Social Media Career** - Promote and manage social media  
+- 2.4.1 Content Platforms - Platforms for content sharing  
+  - 2.4.1.1 YouTube - Video platform  
+  - 2.4.1.2 TikTok - Short video platform  
+  - 2.4.1.3 Instagram - Photo/video social platform  
+- 2.4.2 Marketing Campaigns - Organized promotion efforts  
+  - 2.4.2.1 Project One Campaign - Specific marketing project  
+- 2.4.3 Social Media Management Tools - Manage multiple accounts  
+- 2.4.4 Ad Revenue (Movie Sites) - Earnings from ads
+
+**2.5 💻 Freelance & Career** - Freelance work and career development  
+- 2.5.1 Freelance Platforms - Sites for freelancers  
+- 2.5.2 Job Search - Finding jobs online  
+- 2.5.3 Career Development & CV Tools - Career growth tools  
+- 2.5.4 Affiliate Programs - Referral programs for income  
+- 2.5.5 Call Center Work - Remote call center jobs
+
+**2.6 ₿ Cryptocurrency & Trading** - Digital currency information  
+- 2.6.1 Crypto Platforms & Wallets - Crypto exchanges and wallets  
+- 2.6.2 Blockchain (Ethereum) - Ethereum blockchain resources  
+- 2.6.3 Trading & Analysis - Crypto trading and analytics  
+- 2.6.4 Mining & Earnings - Crypto mining resources  
+- 2.6.5 Crypto News - News about cryptocurrencies (moved to 6.2.3.1)
+
+## 3 TECHNOLOGY & DEVELOPMENT
+
+**3.1 💾 Programming & Development** - Coding and development tools  
+- 3.1.1 Code Repositories (GitHub) - Store and manage code  
+- 3.1.2 Development Platforms & Frameworks - Coding frameworks  
+- 3.1.3 Code Editors & IDEs - Development environments  
+- 3.1.4 APIs & Libraries - Programming resources  
+- 3.1.5 Containerization & Virtualization - Virtual environments  
+- 3.1.6 Other Development Resources - Misc dev tools
+- 🐍 3.1.7 Python Resources – tools, libraries, guides
+
+**3.2 🌐 Web Development & Design** - Build and design websites  
+- 3.2.1 Website Builders - Drag-and-drop platforms  
+  - 3.2.1.1 Elementor - Page builder for WordPress  
+  - 3.2.1.2 WordPress - CMS platform  
+  - 3.2.1.3 WiX - Website builder platform  
+- 3.2.2 Website Layout Resources - Design templates and tools  
+- 3.2.3 Hosting & Domains - Web hosting and domain services
+
+**3.3 🎨 Graphics & Design** - Visual design tools  
+- 3.3.1 Image Editing & Graphic Design - Editing software  
+- 3.3.2 Branding & Logo Design - Brand and logo creation  
+- 3.3.3 Creative & Multipurpose Tools - General creative tools  
+
+**3.4 ⚙️ System Administration** - System and hardware management  
+- 3.4.1 Linux Systems - Linux OS tools  
+  - 3.4.1.1 Linux Tutorials - Learning Linux  
+- 3.4.2 Windows Virtual Machines - Windows VMs  
+- 3.4.3 System Optimization & Maintenance - Maintain OS  
+- 3.4.4 File Management & Search - Manage files  
+- 3.4.5 Interface Customization & Automation - UI tweaks  
+- 3.4.6 Backup & Data Recovery - Protect data  
+- 3.4.7 Software Installation Management - Install software  
+- 3.4.8 Hardware & System Info Tools - Hardware monitoring  
+- 3.4.9 Electronics & Hardware - Physical components
+
+**3.5 🤖 Artificial Intelligence** - AI tools and development  
+- 3.5.1 AI Chatbots & Assistants - Conversational AI  
+- 3.5.2 Content Generation (Text, Images, Video, Audio) - AI content creation  
+- 3.5.3 AI Development Platforms - Build AI apps  
+- 3.5.4 Specialized AI Tools - Niche AI solutions
+
+## 4 🔒 SECURITY & PRIVACY - Security tools and privacy protection
+- 4.1 🛡️💻 Antivirus & Anti-Malware - Protect systems  
+- 4.2 🎭📡 VPN & Proxy Services - Privacy online  
+- 4.3 🔐 Password Management & Encryption - Secure passwords  
+- 4.4 🛡️📶 Network Security & Scanning - Network protection  
+- 4.5 🛡️🖥️ Safe Browsing & Sandbox Environments - Secure browsing  
+- 4.6 🕵️‍🌐 Privacy Services & Anonymous Networks - Online anonymity  
+- 4.7 🛠️💻 Penetration Testing Tools - Security testing tools  
+- 4.8 📱 SMS Verification Services - Phone verification services
+
+## 5 PRODUCTIVITY & ORGANIZATION
+
+**5.1 📋 Project Management & Collaboration** - Work organization tools  
+- 5.1.1 Project & Task Management - Manage projects and tasks  
+- 5.1.2 Office Tools & Documents - Office productivity software  
+- 5.1.3 Email Management & Automation - Automate emails  
+- 5.1.4 Time Management & Calendars - Schedule and plan  
+- 5.1.5 Writing & Proofreading Tools - Writing aids
+
+**5.2 🔄 File Utilities & Conversion** - File processing tools  
+- 5.2.1 File Format Conversion - Convert file types  
+- 5.2.2 Data Compression - Compress files  
+- 5.2.3 Text Processing Tools - Edit and process text files
+
+## 6 INFORMATION & RESEARCH
+
+**6.1 🔍 Search & Web Navigation** - Browsing and search tools  
+- 6.1.1 Web Browsers - Internet browsers  
+- 6.1.2 General Search Engines - Common search engines  
+- 6.1.3 Alternative Search Engines - Non-mainstream search engines  
+- 6.1.4 Specialized Search (Files, IRC, etc.) - Focused search tools
+-6.1.5 Browser Extensions & Plugins - Installed browser add-ons NOVA KATEGORIJA
+
+**6.2 📰 News & Information** - Stay updated  
+- 6.2.1 General News Sources - News outlets  
+- 6.2.2 Tech News & Resources - Tech updates  
+- 6.2.3 Financial & Business News - Financial news  
+- 6.2.3.1 Crypto News - Cryptocurrency news  
+- 6.2.4 News Aggregators & Readers - Collect news feeds  
+- 6.2.5 Forums & Knowledge Bases - Community knowledge
+
+**6.3 📖 Reference & Documentation** - Informational resources  
+- 6.3.1 Technical Documentation - Tech manuals  
+- 6.3.2 General Reference Materials - Encyclopedias and guides
+
+## 7 LEARNING & EDUCATION
+
+**7.1 💡 Online Learning** - Learn via online courses  
+- 7.1.1 Universal Learning Platforms - General learning sites  
+- 7.1.2 Specialized Courses - Specific skill courses  
+- 7.1.3 Language Learning - Language education
+
+**7.2 🔬 Academic Resources** - Academic and research materials  
+- 7.2.1 Digital Libraries & Archives - Online libraries  
+- 7.2.2 Books & Literature - Books and literature  
+- 7.2.3 Comics & Manga - Graphic storytelling  
+- 7.2.4 Academic Research Tools - Research and citation tools  
+- 7.2.5 Science & Mathematics Resources - STEM materials
+
+## 8 HEALTH & LIFESTYLE
+
+**8.1 💪 Health & Wellness** - Health information and tips  
+- 8.1.1 Nutrition & Food Prices - Diet and food costs  
+- 8.1.2 Fitness & Training - Exercise resources  
+- 8.1.3 Health Information & Knowledge - General health info
+
+**8.2 ✈️ Travel & Location Services** - Travel resources  
+- 8.2.1 Serbia Travel Resources - Travel in Serbia  
+- 8.2.2 Germany Travel Resources - Travel in Germany
+
+## 9 ENTERTAINMENT & MEDIA
+
+**9.1 📺 Video Content** - Video platforms and editing  
+- 9.1.1 Movies & TV Shows - Entertainment videos  
+  - 9.1.1.1 Star Trek Content - Star Trek media  
+  - 9.1.1.2 Sports Content - Sports videos  
+  - 9.1.1.3 Subtitled Content - Subtitled videos  
+- 9.1.2 Official Streaming Services - Legal streaming  
+- 9.1.3 Unofficial Streaming Sites - Non-official streaming  
+- 9.1.4 Video Editing & Production Tools - Video creation tools
+
+**9.2 🎮 Gaming** - Games and communities  
+- 9.2.1 PlayStation Emulators - Console emulators  
+- 9.2.2 Online Mini Games - Browser games  
+- 9.2.3 Gaming Platforms & Communities - Game communities
+
+**9.3 🎵 Audio & Music** - Music resources  
+- 9.3.1 Music Players & Audio Tools - Play and edit audio  
+- 9.3.2 Music Streaming & Discovery - Streaming platforms
+
+**9.4 📥 File Sharing & Downloads** - Downloading tools  
+- 9.4.1 General Downloads - Files to download  
+- 9.4.2 Torrent Sites & Clients - Torrent resources  
+- 9.4.3 Media Downloading Tools - Media download software  
+- 9.4.4 URL Shorteners - Link shortening services
+
+**9.5 🎲 Other Entertainment** - Miscellaneous fun  
+- 9.5.1 Adult Content - Adult media  
+- 9.5.2 Gambling & Games of Chance - Betting games  
+- 9.5.3 Miscellaneous Entertainment - Other entertainment
+
+## 10 COMMUNITY & SOCIAL
+
+- 10.1 👥🌐 Social Networks - Online social platforms  
+- 10.2 💬📲 Messaging & Communication Apps - Chat tools  
+- 10.3 🖼️💭 Image Boards & Forums - Community boards  
+- 10.4 🌐🤝 Community Platforms - Groups and communities
+
+## 11 SPECIALIZED & NICHE
+
+**11.1 👨‍💻 Personal Projects** - Personal software projects  
+- 11.1.1 Personal Websites & Blogs - Personal sites  
+- 11.1.2 Internal/Custom Software - Custom software projects
+
+**11.2 🎨 Creative & Aesthetic** - Creative showcases  
+- 11.2.1 Aesthetic & Cool Sites - Visually appealing sites  
+- 11.2.2 Creative Showcases - Creative portfolios
+
+**11.3 🛸 Alternative & Niche Interests** - Niche communities  
+- 11.3.1 Alternative & Paranormal Sites - Paranormal and alternative  
+- 11.3.2 Niche Interest Communities - Specialized interest groups
+
+**11.4 🔀 Miscellaneous Resources** - Various tools and sites  
+- 11.4.1 Online Tools & Services - Useful online tools  
+- 11.4.2 Fun & Random Sites - Entertainment sites  
+- 11.4.3 Miscellaneous Software & Downloads - Misc software  
