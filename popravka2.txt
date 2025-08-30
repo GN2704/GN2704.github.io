@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="sr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lions Pith – Database</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            /* crna pozadina */
+            color: #ffffff;
+            /* beli tekst */
+            margin: 0;
+            padding: 20px;
+            line-height: 1.4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a9eff;
+            margin-bottom: 30px;
+        }
+
+        /* Folder Styles */
+        .folder {
+            margin: 5px 0;
+        }
+
+        .folder-header,
+        .section-header {
+            cursor: pointer;
+            padding: 8px 12px;
+            border: 1px solid #555;
+            border-radius: 6px;
+            user-select: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+
+        .folder-header:hover,
+        .section-header:hover {
+            border-color: #777;
+        }
+
+        .folder-icon {
+            margin-right: 8px;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .icon {
+            margin-right: 8px;
+        }
+
+        /* Folder Levels with your colors */
+        .main-section .section-header {
+            background: #1a1a1a;
+            font-size: 16px;
+        }
+
+        .level-1 .folder-header {
+            background: #333844;
+            margin-left: 20px;
+            font-size: 15px;
+        }
+
+        .level-2 .folder-header {
+            background: #A6B1B5;
+            margin-left: 40px;
+            font-size: 14px;
+            color: #000000;
+        }
+
+        .level-3 .folder-header {
+            background: #C8C1C1;
+            margin-left: 60px;
+            font-size: 13px;
+            color: #000000;
+        }
+
+        .level-4 .folder-header {
+            background: #FFFFFF;
+            margin-left: 80px;
+            font-size: 12px;
+            color: #000000;
+        }
+
+        /* Folder content */
+        .folder-content,
+        .section-content {
+            margin-left: 15px;
+            border-left: 2px solid #555;
+            padding-left: 10px;
+            display: none;
+        }
+
+        .folder-content.open,
+        .section-content.open {
+            display: block;
+        }
+
+        /* Links styling */
+        .leaf {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .leaf a {
+            color: #4a9eff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .leaf a:hover {
+            color: #6bb6ff;
+            text-decoration: underline;
+        }
+
+        /* Hints */
+        .hint {
+            color: #888;
+            font-style: italic;
+            padding: 5px;
+            background: #1f1f1f;
+            border-radius: 3px;
+            margin: 5px 0;
+        }
+
+        .folder-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .folder-name {
+            flex-grow: 1;
+        }
+
+        .toggle-all {
+            padding: 12px 30px;
+            background: linear-gradient(120deg, #333844, #1a1a1a);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-all:hover {
+            background: linear-gradient(120deg, #1a1a1a, #333844);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #2c2c2c;
+            margin: auto;
+            padding: 25px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            color: #f1f1f1;
+        }
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #fff;
+        }
+
+        .tab-btn,
+        .type-btn {
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .tab-btn:hover,
+        .type-btn:hover {
+            background-color: #555;
+        }
+
+        .tab-btn.active,
+        .type-btn.active {
+            background-color: #4a9eff;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            margin-top: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-select,
+        .form-input {
+            width: 100%;
+            padding: 8px;
+            background-color: #333;
+            border: 1px solid #555;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .action-btn {
+            background-color: #4a9eff;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        /* Preview styles */
+        .preview-box {
+            display: none;
+            margin-top: 15px;
+            padding: 10px;
+            background: #3a3a3a;
+            border-radius: 5px;
+        }
+
+        .preview-box.show {
+            display: block;
+        }
+
+        .preview-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .preview-icon {
+            font-size: 24px;
+            margin-right: 15px;
+            color: #4a9eff;
+        }
+
+        .preview-url {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* Status message */
+        .status-message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .status-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .status-error {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        /* Floating buttons */
+        .floating-button {
+            position: fixed;
+            bottom: 20px;
+            padding: 15px;
+            border-radius: 50%;
+            background-color: #4a9eff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            font-size: 20px;
+            z-index: 1000;
+        }
+
+        #addBtn {
+            right: 20px;
+        }
+
+        #removeBtn {
+            right: 90px;
+            background-color: #dc3545;
+        }
+
+        #resetBtn {
+            right: 160px;
+            background-color: #ffc107;
+            color: black;
+        }
+
+        #exportBtn {
+            right: 230px;
+            background-color: #28a745;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Lions Pith – Database <i class="fas fa-folder-tree"></i>&nbsp;</h1>
+        <div id="buttons-container" style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+            <button class="toggle-all" id="toggleSections">
+                <i class="fas fa-expand-arrows-alt"></i> Otvori/Zatvori sve sekcije
+            </button>
+            <button class="toggle-all" id="toggleAll">
+                <i class="fas fa-expand-arrows-alt"></i> Otvori/Zatvori sve foldere
+            </button>
+        </div>
+
+        <div class="content">
+            <div class="main-section">
+                <div class="section-header">
+                    <span class="folder-icon">🔽</span>
+                    1. 👤 PERSONAL & ADMIN
+                </div>
+                <div class="section-content">
+                    <div class="folder level-1">
+                        <div class="folder-header">
+                            <i class="fas fa-chevron-right folder-icon"></i>
+                            <span class="folder-name">1.1 ⭐ Favorites</span>
+                            <span class="folder-info">Frequently used resources</span>
+                        </div>
+                        <div class="folder-content">
+                            <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                        </div>
+                    </div>
+                    <div class="folder level-1">
+                        <div class="folder-header">
+                            <i class="fas fa-chevron-right folder-icon"></i>
+                            <span class="folder-name">1.2 📁 Files & Storage Management</span>
+                            <span class="folder-info">Organize and store files</span>
+                        </div>
+                        <div class="folder-content">
+                            <div class="folder level-2">
+                                <div class="folder-header">
+                                    <i class="fas fa-chevron-right folder-icon"></i>
+                                    <span class="folder-name">1.2.1 Local Files - main folder</span>
+                                    <span class="folder-info">Personal local files</span>
+                                </div>
+                                <div class="folder-content">
+                                    <div class="folder level-3">
+                                        <div class="folder-header">
+                                            <i class="fas fa-chevron-right folder-icon"></i>
+                                            <span class="folder-name">1.2.1.1 Documents</span>
+                                            <span class="folder-info">Text and document files</span>
+                                        </div>
+                                        <div class="folder-content">
+                                            <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                        </div>
+                                    </div>
+                                    <div class="folder level-3">
+                                        <div class="folder-header">
+                                            <i class="fas fa-chevron-right folder-icon"></i>
+                                            <span class="folder-name">1.2.1.2 AirDrop (ALL OS & Users)</span>
+                                            <span class="folder-info">Cross-device file sharing</span>
+                                        </div>
+                                        <div class="folder-content">
+                                            <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="folder level-2">
+                                <div class="folder-header">
+                                    <i class="fas fa-chevron-right folder-icon"></i>
+                                    <span class="folder-name">1.2.2 File Hosting & Sharing</span>
+                                    <span class="folder-info">Online file storage and sharing</span>
+                                </div>
+                                <div class="folder-content">
+                                    <div class="folder level-3">
+                                        <div class="folder-header">
+                                            <i class="fas fa-chevron-right folder-icon"></i>
+                                            <span class="folder-name">1.2.2.1 Cloud Storage</span>
+                                            <span class="folder-info">Cloud-based storage solutions</span>
+                                        </div>
+                                        <div class="folder-content">
+                                            <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                        </div>
+                                    </div>
+                                    <div class="folder level-3">
+                                        <div class="folder-header">
+                                            <i class="fas fa-chevron-right folder-icon"></i>
+                                            <span class="folder-name">1.2.2.2 File Transfer Services</span>
+                                            <span class="folder-info">Services for sending files</span>
+                                        </div>
+                                        <div class="folder-content">
+                                            <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="folder level-1">
+                        <div class="folder-header">
+                            <i class="fas fa-chevron-right folder-icon"></i>
+                            <span class="folder-name">1.3 📄 Personal Administration</span>
+                            <span class="folder-info">Manage personal documents</span>
+                        </div>
+                        <div class="folder-content">
+                            <div class="folder level-2">
+                                <div class="folder-header">
+                                    <i class="fas fa-chevron-right folder-icon"></i>
+                                    <span class="folder-name">1.3.1 German VISA Documents</span>
+                                    <span class="folder-info">Visa related papers</span>
+                                </div>
+                                <div class="folder-content">
+                                    <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                </div>
+                            </div>
+                            <div class="folder level-2">
+                                <div class="folder-header">
+                                    <i class="fas fa-chevron-right folder-icon"></i>
+                                    <span class="folder-name">1.3.2 Shopping Lists</span>
+                                    <span class="folder-info">Personal shopping notes</span>
+                                </div>
+                                <div class="folder-content">
+                                    <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                </div>
+                            </div>
+                            <div class="folder level-2">
+                                <div class="folder-header">
+                                    <i class="fas fa-chevron-right folder-icon"></i>
+                                    <span class="folder-name">1.3.3 Bills Management</span>
+                                    <span class="folder-info">Track and organize bills</span>
+                                </div>
+                                <div class="folder-content">
+                                    <div class="folder level-3">
+                                        <div class="folder-header">
+                                            <i class="fas fa-chevron-right folder-icon"></i>
+                                            <span class="folder-name">1.3.3.1 Serbia</span>
+                                            <span class="folder-info">Bills for Serbia</span>
+                                        </div>
+                                        <div class="folder-content">
+                                            <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                        </div>
+                                    </div>
+                                    <div class="folder level-3">
+                                        <div class="folder-header">
+                                            <i class="fas fa-chevron-right folder-icon"></i>
+                                            <span class="folder-name">1.3.3.2 Germany</span>
+                                            <span class="folder-info">Bills for Germany</span>
+                                        </div>
+                                        <div class="folder-content">
+                                            <div class="hint">STAVITE VAŠE LINKOVE OVDE</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="searchBar" style="position: fixed; bottom: 790px; left: 1280px; width: 280px; 
+            background: #2a2a2a; padding: 10px; border-radius: 8px; 
+            border: 1px solid #555; cursor: grab; z-index: 1000; box-sizing: border-box;">
+
+        <h4 style="color: #D9D4D4; margin: 0 0 10px 0; text-align: center;">🔍 KONTROLA</h4>
+
+        <input type="text" id="searchBox" placeholder="Pretraži kategorije... (Enter za pretragu)" onkeydown="handleSearchKeydown(event)" style="width: 90%; padding: 6px; margin-bottom: 5px; 
+          background: #1a1a1a; color: white; border: 1px solid #555; border-radius: 5px;">
+
+        <div id="searchResults" style="color: #4a9eff; font-size: 12px; margin-bottom: 8px; min-height: 16px;">
+        </div>
+
+        <div id="searchNavigation" style="display: none; margin-bottom: 10px; text-align: center;">
+            <button id="prevResult" onclick="navigateResults(-1)" style="background: #666; color: white; border: none; 
+                       padding: 4px 8px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 12px;">
+                ◀ Prethodni
+            </button>
+            <span id="currentResult" style="color: #fff; font-size: 12px; margin: 0 8px;">1/1</span>
+            <button id="nextResult" onclick="navigateResults(1)" style="background: #666; color: white; border: none; 
+                       padding: 4px 8px; margin: 2px; border-radius: 3px; cursor: pointer; font-size: 12px;">
+                Sledeći ▶
+            </button>
+        </div>
+
+        <button onclick="clearSearchBar()" style="background: #D9D4D4; color: black; border: none; 
+                   padding: 5px 10px; margin: 2px; border-radius: 4px; cursor: pointer; width: 100%;">
+            Obriši pretragu
+        </button>
+    </div>
+
+    <button id="addBtn" class="floating-button" onclick="openBookmarkModal()" title="Dodaj novi bookmark ili folder">
+        <i class="fas fa-plus"></i>
+    </button>
+    <button id="removeBtn" class="floating-button" onclick="openRemoveModal()" title="Ukloni bookmark ili folder">
+        <i class="fas fa-trash-alt"></i>
+    </button>
+    <button id="resetBtn" class="floating-button" onclick="resetToOriginal()" title="Resetuj na originalni sadržaj">
+        <i class="fas fa-undo"></i>
+    </button>
+    <button id="exportBtn" class="floating-button" onclick="exportHTML()" title="Izvezi kao HTML fajl">
+        <i class="fas fa-file-download"></i>
+    </button>
+
+    <div id="bookmarkModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeBookmarkModal()">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('add')"><i class="fas fa-plus-circle"></i> Dodaj</button>
+                <button class="tab-btn" onclick="switchTab('remove')"><i class="fas fa-minus-circle"></i> Ukloni</button>
+            </div>
+
+            <div id="addTab" class="tab-content active">
+                <div class="type-selector">
+                    <button class="type-btn active" onclick="selectAddType('bookmark')"><i class="fas fa-bookmark"></i> Bookmark</button>
+                    <button class="type-btn" onclick="selectAddType('folder')"><i class="fas fa-folder"></i> Folder</button>
+                </div>
+                <div id="bookmarkForm">
+                    <div class="form-group">
+                        <label for="bookmarkTitle"><i class="fas fa-tag"></i> Naslov:</label>
+                        <input type="text" id="bookmarkTitle" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookmarkUrl"><i class="fas fa-link"></i> URL:</label>
+                        <input type="text" id="bookmarkUrl" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="categorySelect"><i class="fas fa-folder-open"></i> Kategorija (Folder):</label>
+                        <select id="categorySelect" class="form-select"></select>
+                    </div>
+                </div>
+                <div id="folderForm" style="display:none;">
+                    <div class="form-group">
+                        <label for="folderName"><i class="fas fa-folder"></i> Naziv foldera:</label>
+                        <input type="text" id="folderName" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label for="parentFolderSelect"><i class="fas fa-sitemap"></i> Parent Folder:</label>
+                        <select id="parentFolderSelect" class="form-select" onchange="updatePositionOptions()"></select>
+                    </div>
+                    <div id="positionOptions"></div>
+                </div>
+            </div>
+
+            <div id="removeTab" class="tab-content">
+                <div class="type-selector">
+                    <button class="type-btn active" onclick="selectRemoveType('bookmark')"><i class="fas fa-bookmark"></i> Bookmark</button>
+                    <button class="type-btn" onclick="selectRemoveType('folder')"><i class="fas fa-folder"></i> Folder</button>
+                </div>
+                <div id="removeBookmarkForm">
+                    <div class="form-group">
+                        <label for="bookmarkRemoveSelect"><i class="fas fa-list-ul"></i> Izaberi bookmark za uklanjanje:</label>
+                        <select id="bookmarkRemoveSelect" class="form-select"></select>
+                    </div>
+                    <div id="bookmarkPreview" class="preview-box"></div>
+                </div>
+                <div id="removeFolderForm" style="display:none;">
+                    <div class="form-group">
+                        <label for="folderRemoveSelect"><i class="fas fa-list-ul"></i> Izaberi folder za uklanjanje:</label>
+                        <select id="folderRemoveSelect" class="form-select"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deleteOptionsSelect"><i class="fas fa-check-square"></i> Opcije brisanja:</label>
+                        <select id="deleteOptionsSelect" class="form-select">
+                            <option value="folder-and-content">Obriši folder i sav sadržaj</option>
+                            <option value="folder-only">Obriši samo folder (premesti sadržaj u parent)</option>
+                        </select>
+                    </div>
+                    <div id="folderPreview" class="preview-box"></div>
+                </div>
+            </div>
+
+            <div id="statusMessage"></div>
+            <button class="action-btn" onclick="executeAction()"><span id="actionBtnText">Dodaj</span></button>
+        </div>
+    </div>
+
+
+    <script>
+        // ==================== CONSTANTS & CONFIGURATION ====================
+        const STORAGE_KEY = 'lionsPith:data:v3';
+        const CURRENT_VERSION = '3.0';
+
+        // Check for reset parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('reset') === 'true') {
+            localStorage.removeItem(STORAGE_KEY);
+            // Remove parameter from URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        // ==================== GLOBAL STATE ====================
+        let currentTab = 'add';
+        let currentAddType = 'bookmark';
+        let currentRemoveType = 'bookmark';
+        let bookmarkElements = [];
+        let allFolders = [];
+        let nextElementId = 1000;
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDataIds();
+            initializeOriginalFunctionality();
+            initializeBookmarkFunctionality();
+
+            // Try to restore from storage, if fails use original content
+            if (!restoreFromStorage()) {
+                console.log('Using original HTML content');
+            }
+
+            cacheAllFolders();
+            setBlank(document.querySelectorAll('.container a'));
+        });
+
+        function initializeDataIds() {
+            // Add data-id to elements that don't have it
+            let idCounter = nextElementId;
+
+            // Sections
+            document.querySelectorAll('.main-section').forEach((section, index) => {
+                if (!section.dataset.id) {
+                    section.dataset.id = `section_${index + 1}`;
+                }
+            });
+
+            // Folders
+            document.querySelectorAll('.folder').forEach((folder) => {
+                if (!folder.dataset.id) {
+                    folder.dataset.id = `folder_${idCounter++}`;
+                }
+            });
+
+            nextElementId = idCounter;
+        }
+
+        function initializeOriginalFunctionality() {
+            // Search bar drag functionality
+            const dragElement = document.getElementById("searchBar");
+            let offsetX = 0,
+                offsetY = 0,
+                isDown = false;
+
+            if (dragElement) {
+                dragElement.addEventListener('mousedown', function(e) {
+                    isDown = true;
+                    offsetX = e.clientX - dragElement.offsetLeft;
+                    offsetY = e.clientY - dragElement.offsetTop;
+                    dragElement.style.cursor = 'grabbing';
+                });
+
+                document.addEventListener('mouseup', function() {
+                    isDown = false;
+                    if (dragElement) dragElement.style.cursor = 'grab';
+                });
+
+                document.addEventListener('mousemove', function(e) {
+                    if (!isDown || !dragElement) return;
+                    e.preventDefault(); // Prevent text selection while dragging
+                    dragElement.style.left = (e.clientX - offsetX) + 'px';
+                    dragElement.style.top = (e.clientY - offsetY) + 'px';
+                });
+            }
+
+            // Folder click functionality
+            attachFolderClickHandlers();
+
+            // Toggle Sections button
+            const toggleSectionsButton = document.getElementById('toggleSections');
+            if (toggleSectionsButton) {
+                toggleSectionsButton.addEventListener('click', function() {
+                    const allSectionContents = document.querySelectorAll('.section-content');
+                    const isAnyClosed = Array.from(allSectionContents).some(c => !c.classList.contains('open'));
+
+                    allSectionContents.forEach((content) => {
+                        if (isAnyClosed) {
+                            content.classList.add('open');
+                        } else {
+                            content.classList.remove('open');
+                        }
+                    });
+
+                    toggleSectionsButton.innerHTML = isAnyClosed ?
+                        '<i class="fas fa-compress-arrows-alt"></i> Zatvori sve sekcije' :
+                        '<i class="fas fa-expand-arrows-alt"></i> Otvori sve sekcije';
+                });
+            }
+
+            // Toggle All Folders button
+            const toggleAllBtn = document.getElementById('toggleAll');
+            if (toggleAllBtn) {
+                toggleAllBtn.addEventListener('click', function() {
+                    const allContents = document.querySelectorAll('.folder-content');
+                    
+                    const allIcons = document.querySelectorAll('.folder-header .folder-icon');
+
+                    const isAnyClosed = Array.from(allContents).some(c => !c.classList.contains('open'));
+
+                    allContents.forEach(content => {
+                        if (isAnyClosed) {
+                            content.classList.add('open');
+                        } else {
+                            content.classList.remove('open');
+                        }
+                    });
+
+                    allIcons.forEach(icon => {
+                        icon.style.transform = isAnyClosed ? 'rotate(90deg)' : 'rotate(0deg)';
+                    });
+
+                    toggleAllBtn.innerHTML = isAnyClosed ?
+                        '<i class="fas fa-compress-arrows-alt"></i> Zatvori sve foldere' :
+                        '<i class="fas fa-expand-arrows-alt"></i> Otvori sve foldere';
+                });
+            }
+
+            // Default keep all folders and sections CLOSED
+            document.querySelectorAll('.folder-content, .section-content').forEach(content => {
+                content.classList.remove('open');
+                const header = content.previousElementSibling;
+                if (header) {
+                    const icon = header.querySelector('.folder-icon');
+                    if (icon && header.classList.contains('folder-header')) {
+                         icon.style.transform = 'rotate(0deg)';
+                    }
+                }
+            });
+        }
+
+        function attachFolderClickHandlers() {
+            const headers = document.querySelectorAll('.folder-header, .section-header');
+            headers.forEach(header => {
+                if (!header.hasAttribute('data-click-attached')) {
+                    header.setAttribute('data-click-attached', 'true');
+                    header.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const content = this.nextElementSibling;
+                        const icon = this.querySelector('.folder-icon');
+
+                        if (content && (content.classList.contains('folder-content') || content.classList.contains('section-content'))) {
+                            const isOpen = content.classList.toggle('open');
+                            if (icon && !this.classList.contains('section-header')) {
+                                icon.style.transform = isOpen ? 'rotate(90deg)' : 'rotate(0deg)';
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        function initializeBookmarkFunctionality() {
+            const modal = document.getElementById('bookmarkModal');
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeBookmarkModal();
+                }
+            });
+
+            ['bookmarkTitle', 'bookmarkUrl', 'folderName'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            executeAction();
+                        }
+                    });
+                }
+            });
+        }
+
+        // ==================== PERSISTENT STORAGE (ISPRAVLJENO) ====================
+        function saveToStorage() {
+            try {
+                const data = {
+                    structure: serializeStructure(),
+                    timestamp: Date.now(),
+                    version: CURRENT_VERSION
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                console.log('Data saved to localStorage with version:', CURRENT_VERSION);
+            } catch (e) {
+                console.error('Failed to save to localStorage:', e);
+                showStatus('Greška pri čuvanju podataka!', 'error');
+            }
+        }
+
+        function restoreFromStorage() {
+            try {
+                const stored = localStorage.getItem(STORAGE_KEY);
+                if (stored) {
+                    const data = JSON.parse(stored);
+
+                    if (!data.version || data.version !== CURRENT_VERSION) {
+                        console.log('Version mismatch or missing version. Clearing old data.');
+                        localStorage.removeItem(STORAGE_KEY);
+                        return false;
+                    }
+
+                    if (data.structure && data.structure.sections) {
+                        deserializeStructure(data.structure);
+                        console.log('Data restored from localStorage');
+                        return true;
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to restore from localStorage:', e);
+                localStorage.removeItem(STORAGE_KEY);
+            }
+            return false;
+        }
+
+        // ================================[FIX START]================================
+        // Robustija funkcija za serijalizaciju koja izbegava direktnu manipulaciju `childNodes`.
+        function serializeStructure() {
+            const sections = [];
+            document.querySelectorAll('.main-section').forEach((section) => {
+                const header = section.querySelector('.section-header');
+                if (!header) return;
+
+                const headerClone = header.cloneNode(true);
+                const icon = headerClone.querySelector('.folder-icon, .icon');
+                const iconHTML = icon ? icon.outerHTML : '';
+                
+                if (icon) {
+                    icon.remove(); // Uklanjamo ikonu iz klona da dobijemo čist tekst
+                }
+                const headerText = headerClone.textContent.trim();
+                
+                const folders = [];
+                serializeFolder(section.querySelector('.section-content'), folders, 1);
+
+                sections.push({
+                    id: section.dataset.id || `section_${sections.length + 1}`,
+                    headerText: headerText,
+                    iconHTML: iconHTML,
+                    folders: folders
+                });
+            });
+            return { sections, nextElementId };
+        }
+        // =================================[FIX END]=================================
+
+        function serializeFolder(container, folders, level) {
+            if (!container) return;
+
+            container.querySelectorAll(':scope > .folder').forEach((folder) => {
+                const header = folder.querySelector('.folder-header .folder-name');
+                const folderName = header ? header.textContent.trim() : '';
+                const content = folder.querySelector('.folder-content');
+                const bookmarks = [];
+
+                if (content) {
+                    content.querySelectorAll(':scope > .leaf').forEach(leaf => {
+                        const link = leaf.querySelector('a');
+                        if (link) {
+                            bookmarks.push({
+                                title: link.textContent.trim(),
+                                url: link.href
+                            });
+                        }
+                    });
+                }
+
+                const childFolders = [];
+                if (content) {
+                    serializeFolder(content, childFolders, level + 1);
+                }
+
+                folders.push({
+                    id: folder.dataset.id || `folder_${folders.length + 1}`,
+                    name: folderName,
+                    level: level,
+                    bookmarks: bookmarks,
+                    children: childFolders,
+                    isOpen: content ? content.classList.contains('open') : false
+                });
+            });
+        }
+        
+        // Funkcija za deserijalizaciju ostaje ista jer je problem bio u podacima koje dobija.
+        function deserializeStructure(structure) {
+            const container = document.querySelector('.container .content');
+            if (!container) {
+                console.error("Container .content not found for deserialization");
+                return;
+            }
+
+            container.innerHTML = ''; // Clear existing content
+
+            structure.sections.forEach((sectionData) => {
+                const section = document.createElement('div');
+                section.className = 'main-section';
+                section.dataset.id = sectionData.id;
+
+                const iconHTML = sectionData.iconHTML || '';
+                const headerText = sectionData.headerText || '';
+                
+                // Sklapamo header od sačuvanih delova
+                section.innerHTML = `
+                    <div class="section-header">
+                        ${iconHTML}
+                        ${headerText}
+                    </div>
+                    <div class="section-content"></div>
+                `;
+
+                const sectionContent = section.querySelector('.section-content');
+                if (sectionData.folders) {
+                    sectionData.folders.forEach(folderData => {
+                        createFolderElement(sectionContent, folderData);
+                    });
+                }
+
+                container.appendChild(section);
+            });
+
+            if (structure.nextElementId) {
+                nextElementId = structure.nextElementId;
+            }
+
+            setTimeout(() => {
+                attachFolderClickHandlers();
+                cacheAllFolders();
+            }, 100);
+        }
+
+        function createFolderElement(container, folderData) {
+            const folderDiv = document.createElement('div');
+            folderDiv.className = `folder level-${folderData.level}`;
+            folderDiv.dataset.id = folderData.id;
+
+            folderDiv.innerHTML = `
+                <div class="folder-header">
+                    <i class="fas fa-chevron-right folder-icon" style="transform: ${folderData.isOpen ? 'rotate(90deg)' : 'rotate(0deg)'}"></i>
+                    <span class="folder-name">${folderData.name}</span>
+                </div>
+                <div class="folder-content ${folderData.isOpen ? 'open' : ''}"></div>
+            `;
+            const folderContent = folderDiv.querySelector('.folder-content');
+
+            folderData.bookmarks.forEach(bookmarkData => {
+                const leafDiv = document.createElement('div');
+                leafDiv.className = 'leaf';
+                leafDiv.innerHTML = `<a href="${bookmarkData.url}" target="_blank" rel="noopener noreferrer">${bookmarkData.title}</a>`;
+                folderContent.appendChild(leafDiv);
+            });
+
+            folderData.children.forEach(childData => {
+                createFolderElement(folderContent, childData);
+            });
+
+            container.appendChild(folderDiv);
+        }
+
+        function cacheAllFolders() {
+            allFolders = Array.from(document.querySelectorAll('.folder, .main-section')).map((element, index) => {
+                let name = '';
+                let level = 0;
+                let header = null;
+
+                if (element.classList.contains('main-section')) {
+                    header = element.querySelector('.section-header');
+                    const icon = header.querySelector('.icon, .folder-icon');
+                    let text = '';
+                    header.childNodes.forEach(node => {
+                        if (node !== icon) text += node.textContent;
+                    });
+                    name = text.trim();
+                    level = 0;
+                } else {
+                    header = element.querySelector('.folder-header');
+                    const folderNameEl = header ? header.querySelector('.folder-name') : null;
+                    name = folderNameEl ? folderNameEl.textContent.trim() : '';
+                    level = getFolderLevel(element);
+                }
+
+                return {
+                    element: element,
+                    header: header,
+                    name: name,
+                    level: level,
+                    index: index,
+                    id: element.dataset.id || `element_${index}`
+                };
+            });
+        }
+
+        // ==================== RESET FUNCTIONALITY ====================
+        function resetToOriginal() {
+            if (confirm('Da li ste sigurni da želite da resetujete na originalni sadržaj? Sve izmene će biti izgubljene.')) {
+                localStorage.removeItem(STORAGE_KEY);
+                location.reload();
+            }
+        }
+
+        // ==================== MODAL MANAGEMENT ====================
+        function openBookmarkModal() {
+            switchTab('add');
+            populateCategories();
+            populateParentFolders();
+            document.getElementById('bookmarkModal').style.display = 'flex';
+            setTimeout(() => {
+                const firstInput = document.getElementById('bookmarkTitle');
+                if (firstInput) firstInput.focus();
+            }, 100);
+        }
+
+        function openRemoveModal() {
+            switchTab('remove');
+            populateBookmarksForRemoval();
+            populateFoldersForRemoval();
+            document.getElementById('bookmarkModal').style.display = 'flex';
+        }
+
+        function closeBookmarkModal() {
+            document.getElementById('bookmarkModal').style.display = 'none';
+            clearAllForms();
+        }
+
+        function clearAllForms() {
+            document.getElementById('bookmarkTitle').value = '';
+            document.getElementById('bookmarkUrl').value = '';
+            document.getElementById('folderName').value = '';
+            document.getElementById('categorySelect').value = '';
+            document.getElementById('parentFolderSelect').value = '';
+            document.getElementById('bookmarkRemoveSelect').value = '';
+            document.getElementById('folderRemoveSelect').value = '';
+            document.getElementById('deleteOptionsSelect').value = 'folder-and-content';
+            document.getElementById('bookmarkPreview').innerHTML = '';
+            document.getElementById('folderPreview').innerHTML = '';
+            document.getElementById('statusMessage').innerHTML = '';
+            document.getElementById('bookmarkPreview').classList.remove('show');
+            document.getElementById('folderPreview').classList.remove('show');
+        }
+
+        // ==================== TAB AND TYPE SWITCHING ====================
+        function switchTab(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.tab-btn[onclick="switchTab('${tab}')"]`).classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${tab}Tab`).classList.add('active');
+
+            if (tab === 'add') {
+                document.getElementById('modalTitle').innerHTML = '📌 Dodaj Bookmark ili Folder';
+                document.getElementById('actionBtnText').textContent = 'Dodaj';
+            } else {
+                document.getElementById('modalTitle').innerHTML = '🗑️ Ukloni Bookmark ili Folder';
+                document.getElementById('actionBtnText').textContent = 'Ukloni';
+            }
+        }
+
+        function selectAddType(type) {
+            currentAddType = type;
+            document.querySelectorAll('#addTab .type-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`#addTab .type-btn[onclick="selectAddType('${type}')"]`).classList.add('active');
+            document.getElementById('bookmarkForm').style.display = (type === 'bookmark') ? 'block' : 'none';
+            document.getElementById('folderForm').style.display = (type === 'folder') ? 'block' : 'none';
+            if (type === 'folder') updatePositionOptions();
+        }
+
+        function selectRemoveType(type) {
+            currentRemoveType = type;
+            document.querySelectorAll('#removeTab .type-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`#removeTab .type-btn[onclick="selectRemoveType('${type}')"]`).classList.add('active');
+            document.getElementById('removeBookmarkForm').style.display = (type === 'bookmark') ? 'block' : 'none';
+            document.getElementById('removeFolderForm').style.display = (type === 'folder') ? 'block' : 'none';
+        }
+
+        // ==================== POSITION OPTIONS ====================
+        function updatePositionOptions() {
+            const parentSelect = document.getElementById('parentFolderSelect');
+            const positionOptions = document.getElementById('positionOptions');
+            const selectedParentId = parentSelect.value;
+            positionOptions.innerHTML = '';
+
+            let existingSectionSelect = document.getElementById('sectionSelectDiv');
+            if (existingSectionSelect) existingSectionSelect.remove();
+
+            if (!selectedParentId || selectedParentId === '') {
+                positionOptions.innerHTML = `
+                <div class="position-radio">
+                    <input type="radio" name="position" value="root-start" id="pos-root-start" checked>
+                    <label for="pos-root-start">Na početku (kao prva sekcija)</label>
+                </div>
+                <div class="position-radio">
+                    <input type="radio" name="position" value="root-before" id="pos-root-before">
+                    <label for="pos-root-before">Pre određene sekcije</label>
+                </div>
+                <div class="position-radio">
+                    <input type="radio" name="position" value="root-after" id="pos-root-after">
+                    <label for="pos-root-after">Posle određene sekcije</label>
+                </div>
+                <div class="position-radio">
+                    <input type="radio" name="position" value="root-end" id="pos-root-end">
+                    <label for="pos-root-end">Na kraju (kao poslednja sekcija)</label>
+                </div>
+            `;
+                document.querySelectorAll('input[name="position"]').forEach(radio => {
+                    radio.addEventListener('change', function() {
+                        let el = document.getElementById('sectionSelectDiv');
+                        if (el) el.remove();
+                        if (this.value === 'root-before' || this.value === 'root-after') {
+                            addSectionSelect();
+                        }
+                    });
+                });
+            } else {
+                positionOptions.innerHTML = `
+                <div class="position-radio">
+                    <input type="radio" name="position" value="child" id="pos-child" checked>
+                    <label for="pos-child">Kao dete (unutar foldera)</label>
+                </div>
+                <div class="position-radio">
+                    <input type="radio" name="position" value="sibling-before" id="pos-sibling-before">
+                    <label for="pos-sibling-before">Kao sibling (pre foldera)</label>
+                </div>
+                <div class="position-radio">
+                    <input type="radio" name="position" value="sibling-after" id="pos-sibling-after">
+                    <label for="pos-sibling-after">Kao sibling (posle foldera)</label>
+                </div>
+            `;
+            }
+        }
+
+        function addSectionSelect() {
+            const positionOptions = document.getElementById('positionOptions');
+            const selectDiv = document.createElement('div');
+            selectDiv.id = 'sectionSelectDiv';
+            selectDiv.innerHTML = `
+            <div class="form-group" style="margin-top: 10px;">
+                <label><i class="fas fa-list"></i> Referentna sekcija:</label>
+                <select id="sectionSelect" class="form-select">
+                    <option value="">-- Izaberi sekciju --</option>
+                </select>
+            </div>
+        `;
+            positionOptions.appendChild(selectDiv);
+            const sectionSelect = document.getElementById('sectionSelect');
+            document.querySelectorAll('.main-section').forEach((section) => {
+                const header = section.querySelector('.section-header');
+                const option = document.createElement('option');
+                option.value = section.dataset.id;
+                option.textContent = header ? header.textContent.trim() : 'Unnamed Section';
+                sectionSelect.appendChild(option);
+            });
+        }
+
+
+        // ==================== POPULATE FUNCTIONS ====================
+        function populateCategories() {
+            const select = document.getElementById('categorySelect');
+            select.innerHTML = '<option value="">-- Izaberi kategoriju --</option>';
+            const categories = new Set();
+            document.querySelectorAll('.folder-name, .section-header').forEach(el => {
+                const name = el.textContent.trim();
+                if (name) categories.add(name);
+            });
+            Array.from(categories).sort().forEach(category => {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                select.appendChild(option);
+            });
+        }
+
+        function populateParentFolders() {
+            const select = document.getElementById('parentFolderSelect');
+            select.innerHTML = '<option value="">-- Root Level (Nova glavna sekcija) --</option>';
+            allFolders.sort((a, b) => a.index - b.index).forEach(folder => {
+                if (folder.name && folder.id) {
+                    const indent = '　'.repeat(folder.level);
+                    const option = document.createElement('option');
+                    option.value = folder.id;
+                    // ISPRAVKA: Uklonjen .replace() koji je brisao numeraciju
+                    option.textContent = indent + folder.name;
+                    select.appendChild(option);
+                }
+            });
+        }
+
+        function populateBookmarksForRemoval() {
+            const select = document.getElementById('bookmarkRemoveSelect');
+            select.innerHTML = '<option value="">-- Izaberi bookmark --</option>';
+            bookmarkElements = [];
+            document.querySelectorAll('a[href]').forEach((link, index) => {
+                const parentLeaf = link.closest('.leaf');
+                if (parentLeaf) {
+                    const category = findBookmarkCategory(link);
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = `${link.textContent} (${category})`;
+                    select.appendChild(option);
+                    bookmarkElements[index] = {
+                        element: parentLeaf,
+                        title: link.textContent,
+                        url: link.href,
+                        category: category
+                    };
+                }
+            });
+            select.onchange = () => showBookmarkPreview(select.value);
+        }
+
+        function populateFoldersForRemoval() {
+            const select = document.getElementById('folderRemoveSelect');
+            select.innerHTML = '<option value="">-- Izaberi folder --</option>';
+            allFolders.forEach(folder => {
+                if (folder.name && folder.id) {
+                    const indent = '　'.repeat(folder.level);
+                    const option = document.createElement('option');
+                    option.value = folder.id;
+                    option.textContent = indent + folder.name;
+                    select.appendChild(option);
+                }
+            });
+            select.onchange = () => showFolderPreview(select.value);
+        }
+
+        // ==================== PREVIEW FUNCTIONS ====================
+        function showBookmarkPreview(index) {
+            const preview = document.getElementById('bookmarkPreview');
+            if (!index) {
+                preview.classList.remove('show');
+                return;
+            }
+            const bookmark = bookmarkElements[parseInt(index)];
+            if (bookmark) {
+                preview.innerHTML = `
+                <div class="preview-item">
+                    <i class="fas fa-bookmark preview-icon"></i>
+                    <div class="preview-text">
+                        <div><strong>${bookmark.title}</strong></div>
+                        <div class="preview-url">${bookmark.url}</div>
+                        <div class="preview-url">Kategorija: ${bookmark.category}</div>
+                    </div>
+                </div>`;
+                preview.classList.add('show');
+            }
+        }
+
+        function showFolderPreview(folderId) {
+            const preview = document.getElementById('folderPreview');
+            if (!folderId) {
+                preview.classList.remove('show');
+                return;
+            }
+            const folder = allFolders.find(f => f.id === folderId);
+            if (!folder) return;
+            const bookmarkCount = folder.element.querySelectorAll('a').length;
+            const subfolderCount = folder.element.querySelectorAll('.folder').length;
+            const elementType = folder.element.classList.contains('main-section') ? 'Glavna Sekcija' : 'Folder';
+            preview.innerHTML = `
+            <div class="preview-item">
+                <i class="fas fa-folder preview-icon"></i>
+                <div class="preview-text">
+                    <div><strong>${elementType} (Level ${folder.level}): ${folder.name}</strong></div>
+                    <div class="preview-url">${bookmarkCount} bookmark-ova</div>
+                    <div class="preview-url">${subfolderCount} podfoldera</div>
+                </div>
+            </div>`;
+            preview.classList.add('show');
+        }
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function getFolderLevel(folder) {
+            const match = folder.className.match(/level-(\d+)/);
+            return match ? parseInt(match[1]) : 0;
+        }
+
+        function findBookmarkCategory(link) {
+            let element = link.closest('.folder, .main-section');
+            if (element) {
+                const header = element.querySelector('.folder-name, .section-header');
+                if (header) return header.textContent.trim();
+            }
+            return 'Nepoznata kategorija';
+        }
+
+        function parseNumbering(text) {
+            const match = text.match(/^(\d+(?:\.\d+)*)/);
+            return match ? match[1].split('.').map(n => parseInt(n, 10)) : null;
+        }
+
+        function generateMainSectionNumber() {
+            let maxNumber = 0;
+            document.querySelectorAll('.main-section .section-header').forEach(header => {
+                const numbers = parseNumbering(header.textContent.trim());
+                if (numbers && numbers.length > 0) {
+                    maxNumber = Math.max(maxNumber, numbers[0]);
+                }
+            });
+            return maxNumber + 1;
+        }
+
+        function generateFolderNumber(parentFolderId) {
+            const parent = allFolders.find(f => f.id === parentFolderId);
+            if (!parent) return '1';
+
+            const parentNumbers = parseNumbering(parent.name) || [];
+            const parentContent = parent.element.querySelector('.folder-content, .section-content');
+            if (!parentContent) return parentNumbers.join('.') + '.1';
+
+            let maxChild = 0;
+            parentContent.querySelectorAll(':scope > .folder').forEach(childFolder => {
+                const childHeader = childFolder.querySelector('.folder-header .folder-name');
+                if (childHeader) {
+                    const childNumbers = parseNumbering(childHeader.textContent);
+                    if (childNumbers && childNumbers.length === parentNumbers.length + 1) {
+                        maxChild = Math.max(maxChild, childNumbers[childNumbers.length - 1]);
+                    }
+                }
+            });
+
+            return [...parentNumbers, maxChild + 1].join('.');
+        }
+
+        function insertMainSectionAt(newSection, position, referenceSectionId = null) {
+            const container = document.querySelector('.container .content');
+            if (!container) {
+                console.error("Container .content not found!");
+                return;
+            }
+
+            const refSection = referenceSectionId ? document.querySelector(`.main-section[data-id="${referenceSectionId}"]`) : null;
+
+            switch (position) {
+                case 'root-start':
+                    container.prepend(newSection);
+                    break;
+                case 'root-end':
+                    container.appendChild(newSection);
+                    break;
+                case 'root-before':
+                    if (refSection) refSection.before(newSection);
+                    else container.prepend(newSection); // Fallback
+                    break;
+                case 'root-after':
+                    if (refSection) refSection.after(newSection);
+                    else container.appendChild(newSection); // Fallback
+                    break;
+                default:
+                    container.appendChild(newSection);
+            }
+            reindexMainSections();
+        }
+
+        // ================================[FIX START]================================
+        // Robustija funkcija za reindeksiranje koja izbegava direktnu manipulaciju `childNodes`.
+        function reindexMainSections() {
+            const sections = document.querySelectorAll('.main-section');
+            sections.forEach((section, index) => {
+                const header = section.querySelector('.section-header');
+                if (header) {
+                    const originalIcon = header.querySelector('.folder-icon, .icon');
+                    const headerClone = header.cloneNode(true);
+                    const iconInClone = headerClone.querySelector('.folder-icon, .icon');
+                    
+                    if (iconInClone) {
+                        iconInClone.remove();
+                    }
+                    
+                    const textContent = headerClone.textContent.trim();
+                    const currentText = textContent.replace(/^\d+\.\s*/, '');
+                    const newNumber = index + 1;
+                    
+                    header.innerHTML = ''; // Brišemo stari sadržaj
+                    if (originalIcon) {
+                        header.appendChild(originalIcon.cloneNode(true)); // Vraćamo originalnu ikonu
+                    }
+                    // Dodajemo razmak, novi broj i čist tekst kao text node
+                    header.append(` ${newNumber}. ${currentText}`);
+                }
+            });
+        }
+        // =================================[FIX END]=================================
+
+        // ==================== ACTION EXECUTION ====================
+        function executeAction() {
+            if (currentTab === 'add') {
+                if (currentAddType === 'bookmark') addBookmark();
+                else addFolder();
+            } else {
+                if (currentRemoveType === 'bookmark') removeBookmark();
+                else removeFolder();
+            }
+        }
+
+        function addBookmark() {
+            const title = document.getElementById('bookmarkTitle').value.trim();
+            let url = document.getElementById('bookmarkUrl').value.trim();
+            const category = document.getElementById('categorySelect').value;
+
+            if (!title || !url || !category) {
+                showStatus('Molimo popunite sva polja!', 'error');
+                return;
+            }
+            if (!url.match(/^https?:\/\//)) {
+                url = 'https://' + url;
+            }
+
+            let targetElement = null;
+            document.querySelectorAll('.folder-name, .section-header').forEach(el => {
+                if (el.textContent.trim() === category) {
+                    targetElement = el.closest('.folder, .main-section').querySelector('.folder-content, .section-content');
+                }
+            });
+
+            if (!targetElement) {
+                showStatus('Kategorija nije pronađena!', 'error');
+                return;
+            }
+
+            const newBookmark = document.createElement('div');
+            newBookmark.className = 'leaf';
+            newBookmark.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`;
+            targetElement.appendChild(newBookmark);
+            setBlank([newBookmark.querySelector('a')]);
+
+            saveToStorage();
+            cacheAllFolders();
+            showStatus('Bookmark je uspešno dodat!', 'success');
+            setTimeout(closeBookmarkModal, 1500);
+        }
+
+        function addFolder() {
+            const folderName = document.getElementById('folderName').value.trim();
+            const parentFolderId = document.getElementById('parentFolderSelect').value;
+
+            if (!folderName) {
+                showStatus('Molimo unesite naziv foldera!', 'error');
+                return;
+            }
+
+            const selectedPosition = document.querySelector('input[name="position"]:checked').value;
+
+            if (!parentFolderId || parentFolderId === '') { // Adding a new Main Section
+                const newSection = document.createElement('div');
+                newSection.className = 'main-section';
+                newSection.dataset.id = `section_${nextElementId++}`;
+                newSection.innerHTML = `
+                <div class="section-header">
+                    <i class="fas fa-folder icon"></i>
+                    ${folderName}
+                </div>
+                <div class="section-content"></div>
+            `;
+                let refId = null;
+                if (selectedPosition === 'root-before' || selectedPosition === 'root-after') {
+                    const sectionSelect = document.getElementById('sectionSelect');
+                    if (!sectionSelect || !sectionSelect.value) {
+                        showStatus('Molimo izaberite referentnu sekciju!', 'error');
+                        return;
+                    }
+                    refId = sectionSelect.value;
+                }
+                insertMainSectionAt(newSection, selectedPosition, refId);
+            } else { // Adding a sub-folder
+                const parent = allFolders.find(f => f.id === parentFolderId);
+                if (!parent) {
+                    showStatus('Parent folder nije pronađen!', 'error');
+                    return;
+                }
+                const targetLevel = parent.level + 1;
+                if (targetLevel > 5) { // CSS podržava do 4, ali logika dozvoljava više
+                    showStatus('Maksimalna dubina je 5 nivoa!', 'error');
+                    return;
+                }
+                const folderNumber = generateFolderNumber(parentFolderId);
+                const newFolder = document.createElement('div');
+                newFolder.className = `folder level-${targetLevel}`;
+                newFolder.dataset.id = `folder_${nextElementId++}`;
+                newFolder.innerHTML = `
+                <div class="folder-header">
+                    <i class="fas fa-chevron-right folder-icon"></i>
+                    <span class="folder-name">${folderNumber} ${folderName}</span>
+                </div>
+                <div class="folder-content"></div>
+            `;
+                if (selectedPosition === 'child') {
+                    const container = parent.element.querySelector('.folder-content, .section-content');
+                    if (container) {
+                        container.appendChild(newFolder);
+                        container.classList.add('open');
+                        const icon = parent.header.querySelector('.folder-icon');
+                        if (icon) icon.style.transform = 'rotate(90deg)';
+                    }
+                } else if (selectedPosition === 'sibling-before') {
+                    parent.element.before(newFolder);
+                } else if (selectedPosition === 'sibling-after') {
+                    parent.element.after(newFolder);
+                }
+            }
+            saveToStorage();
+            attachFolderClickHandlers();
+            cacheAllFolders();
+            showStatus('Folder je uspešno dodat!', 'success');
+            setTimeout(closeBookmarkModal, 1500);
+        }
+
+        function removeBookmark() {
+            const selectValue = document.getElementById('bookmarkRemoveSelect').value;
+            if (!selectValue) {
+                showStatus('Molimo izaberite bookmark za brisanje!', 'error');
+                return;
+            }
+            const bookmark = bookmarkElements[parseInt(selectValue)];
+            if (bookmark && bookmark.element) {
+                bookmark.element.remove();
+                saveToStorage();
+                cacheAllFolders();
+                showStatus('Bookmark je uspešno uklonjen!', 'success');
+                setTimeout(closeBookmarkModal, 1500);
+            } else {
+                showStatus('Greška pri brisanju bookmark-a!', 'error');
+            }
+        }
+
+        function removeFolder() {
+            const selectValue = document.getElementById('folderRemoveSelect').value;
+            const deleteOption = document.getElementById('deleteOptionsSelect').value;
+            if (!selectValue) {
+                showStatus('Molimo izaberite folder za brisanje!', 'error');
+                return;
+            }
+            const folder = allFolders.find(f => f.id === selectValue);
+            if (!folder) {
+                showStatus('Folder nije pronađen!', 'error');
+                return;
+            }
+            if (deleteOption === 'folder-only') {
+                const parent = folder.element.parentElement;
+                const content = folder.element.querySelector('.folder-content, .section-content');
+                if (content && parent) {
+                    while (content.firstChild) {
+                        parent.insertBefore(content.firstChild, folder.element);
+                    }
+                }
+            }
+            const isMainSection = folder.element.classList.contains('main-section');
+            folder.element.remove();
+            if (isMainSection) {
+                reindexMainSections();
+            }
+            saveToStorage();
+            cacheAllFolders();
+            showStatus('Folder je uspešno uklonjen!', 'success');
+            setTimeout(closeBookmarkModal, 1500);
+        }
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = `status-message status-${type}`;
+        }
+
+        // ==================== EXPORT HTML FUNCTIONALITY ====================
+        function exportHTML() {
+            try {
+                const docClone = document.documentElement.cloneNode(true);
+                docClone.querySelectorAll('[data-click-attached], [data-sb-highlight], [data-sb-hidden]').forEach(el => {
+                    el.removeAttribute('data-click-attached');
+                    el.removeAttribute('data-sb-highlight');
+                    el.removeAttribute('data-sb-hidden');
+                    if (el._sb_prev) delete el._sb_prev;
+                });
+                // =========== ISPRAVKA ===========
+                // Sledeća linija je komentarisana da bi se sačuvali svi interaktivni elementi
+                // docClone.querySelectorAll('.floating-button, .modal, #searchBar').forEach(el => el.remove());
+                // ================================
+                const htmlString = '<!DOCTYPE html>\n' + docClone.outerHTML;
+                const blob = new Blob([htmlString], {
+                    type: 'text/html;charset=utf-8'
+                });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'lions-pith-database.html';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+                showStatus('HTML je uspešno izvezen!', 'success');
+            } catch (error) {
+                console.error('Export failed:', error);
+                showStatus('Greška pri izvozu HTML-a!', 'error');
+            }
+        }
+
+        // ==================== SEARCH FUNCTIONALITY - ENTER MODE ====================
+        let currentMatches = [];
+        let currentMatchIndex = 0;
+
+        function handleSearchKeydown(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                searchFolders();
+            } else if (event.key === 'Escape') {
+                clearSearchBar();
+            }
+        }
+
+        function searchFolders() {
+            const query = document.getElementById('searchBox').value.toLowerCase().trim();
+            resetAllSearchEffects();
+
+            if (!query) return;
+
+            const candidates = Array.from(document.querySelectorAll('a, .folder-header, .section-header'));
+            currentMatches = candidates.filter(n => (n.textContent || '').toLowerCase().includes(query));
+
+            updateResultsDisplay();
+
+            if (currentMatches.length > 0) {
+                const elementsToShow = new Set();
+                currentMatches.forEach(match => {
+                    let el = match;
+                    while (el) {
+                        elementsToShow.add(el);
+                        el = el.parentElement;
+                    }
+                });
+
+                document.querySelectorAll('.main-section, .folder').forEach(el => {
+                    if (!elementsToShow.has(el)) {
+                        el.setAttribute('data-sb-hidden', 'true');
+                        el.style.display = 'none'; // Hide non-matching elements
+                    }
+                });
+                 
+                elementsToShow.forEach(el => {
+                    if (el.style.display === 'none') {
+                        el.style.display = '';
+                    }
+                    if (el.classList.contains('folder') || el.classList.contains('main-section')) {
+                        const content = el.querySelector(':scope > .folder-content, :scope > .section-content');
+                        if (content) content.classList.add('open');
+                        const icon = el.querySelector(':scope > .folder-header .folder-icon, :scope > .section-header .folder-icon');
+                        if (icon) icon.style.transform = 'rotate(90deg)';
+                    }
+                });
+
+                highlightResult(0);
+            }
+        }
+
+        function resetAllSearchEffects() {
+            document.querySelectorAll('[data-sb-highlight="true"]').forEach(el => {
+                el.removeAttribute('data-sb-highlight');
+                if (el._sb_prev) {
+                    el.style.outline = el._sb_prev.outline || '';
+                    el.style.backgroundColor = el._sb_prev.backgroundColor || '';
+                    delete el._sb_prev;
+                }
+            });
+            document.querySelectorAll('[data-sb-hidden]').forEach(el => {
+                 el.removeAttribute('data-sb-hidden');
+                 el.style.display = '';
+            });
+            currentMatches = [];
+            currentMatchIndex = 0;
+            updateResultsDisplay();
+        }
+
+        function updateResultsDisplay() {
+            const resultsDiv = document.getElementById('searchResults');
+            const navigationDiv = document.getElementById('searchNavigation');
+            const query = document.getElementById('searchBox').value;
+            if (currentMatches.length === 0) {
+                resultsDiv.textContent = query ? 'Nema rezultata' : '';
+                navigationDiv.style.display = 'none';
+                return;
+            }
+            resultsDiv.textContent = `Pronađeno: ${currentMatches.length} rezultata`;
+            if (currentMatches.length > 1) {
+                navigationDiv.style.display = 'block';
+                document.getElementById('currentResult').textContent = `${currentMatchIndex + 1}/${currentMatches.length}`;
+                document.getElementById('prevResult').disabled = currentMatchIndex === 0;
+                document.getElementById('nextResult').disabled = currentMatchIndex === currentMatches.length - 1;
+            } else {
+                navigationDiv.style.display = 'none';
+            }
+        }
+
+        function highlightResult(index) {
+            document.querySelectorAll('[data-sb-highlight="true"]').forEach(el => {
+                el.removeAttribute('data-sb-highlight');
+                if (el._sb_prev) {
+                    el.style.outline = el._sb_prev.outline;
+                    el.style.backgroundColor = el._sb_prev.backgroundColor;
+                    delete el._sb_prev;
+                }
+            });
+            if (index < 0 || index >= currentMatches.length) return;
+            const target = currentMatches[index];
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
+            target._sb_prev = {
+                outline: target.style.outline || '',
+                backgroundColor: target.style.backgroundColor || ''
+            };
+            target.setAttribute('data-sb-highlight', 'true');
+            target.style.outline = '2px solid #4a9eff';
+            target.style.backgroundColor = '#333844';
+        }
+
+        function navigateResults(direction) {
+            currentMatchIndex += direction;
+            if (currentMatchIndex < 0) currentMatchIndex = 0;
+            if (currentMatchIndex >= currentMatches.length) currentMatchIndex = currentMatches.length - 1;
+            updateResultsDisplay();
+            highlightResult(currentMatchIndex);
+        }
+
+        function clearSearchBar() {
+            const searchBox = document.getElementById('searchBox');
+            searchBox.value = '';
+            resetAllSearchEffects();
+            searchBox.focus();
+        }
+
+        // ==================== LINK HELPER ====================
+        function setBlank(links) {
+            links.forEach(a => {
+                a.setAttribute('target', '_blank');
+                a.setAttribute('rel', 'noopener noreferrer');
+            });
+        }
+
+        new MutationObserver(mutations => {
+            mutations.forEach(m => {
+                m.addedNodes.forEach(node => {
+                    if (node.nodeType !== 1) return;
+                    const links = node.matches('a') ? [node] : node.querySelectorAll('a');
+                    setBlank(links);
+                });
+            });
+        }).observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    </script>
+
+</body>
+
+</html>
